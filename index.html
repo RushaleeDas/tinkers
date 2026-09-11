@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f8f5" />
+    <title>MBA Daily Brief</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#today" aria-label="MBA Daily Brief home">
+        <span class="brand-mark">M</span>
+        <span>MBA <em>Daily Brief</em></span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <a class="nav-link active" href="#today" data-view="today">Today</a>
+        <a class="nav-link" href="#history" data-view="history">Practice history <span id="history-count" class="nav-count">0</span></a>
+      </nav>
+      <div class="header-date"><span class="live-dot"></span><span id="header-date"></span></div>
+    </header>
+
+    <main id="app" class="shell">
+      <section id="today-view" class="view">
+        <div class="hero fade-up">
+          <div>
+            <p class="eyebrow">Morning intelligence · <span id="hero-date"></span></p>
+            <h1>Know what happened.<br /><span>Know what to say.</span></h1>
+            <p class="hero-copy">A focused 10-minute briefing for sharper MBA interviews, extempore rounds and group discussions — with the context, numbers and questions behind the news.</p>
+          </div>
+          <div class="hero-meta"><span>Edition 01</span><span class="meta-rule"></span><span>~10 min read</span></div>
+        </div>
+
+        <div class="section-heading fade-up delay-1">
+          <div><span class="section-number">01</span><h2>Today’s brief</h2></div>
+          <p id="brief-updated">Updated this morning · 5 stories</p><button id="refresh-brief" class="refresh-button" type="button">↻ Refresh</button>
+        </div>
+        <div id="stories" class="stories fade-up delay-2"></div>
+
+        <section class="extempore-section fade-up delay-3">
+          <div class="section-heading extempore-heading">
+            <div><span class="section-number">02</span><h2>Extempore of the day</h2></div>
+            <span class="practice-label">Think before you speak</span>
+          </div>
+          <div id="extempore-card" class="extempore-card"></div>
+        </section>
+      </section>
+
+      <section id="history-view" class="view hidden">
+        <div class="history-intro fade-up"><p class="eyebrow">Your practice archive</p><h1>Practice<br /><span>history.</span></h1><p class="hero-copy">A quiet record of the questions you’ve taken on. Revisit your thinking and notice how it evolves.</p></div>
+        <div class="section-heading"><div><span class="section-number">03</span><h2>Past extempore topics</h2></div><p id="history-summary"></p></div>
+        <div id="history-list" class="history-list"></div>
+      </section>
+    </main>
+
+    <div id="practice-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="practice-title">
+      <div class="modal-card">
+        <div class="modal-top"><span class="eyebrow">Practice mode</span><button class="icon-button" id="close-modal" aria-label="Close practice mode">×</button></div>
+        <div id="practice-active">
+          <p class="modal-kicker">Your question</p><h2 id="practice-title"></h2>
+          <div class="timer-wrap"><div id="timer" class="timer">02:00</div><div class="timer-track"><span id="timer-progress"></span></div><p>Speak for two minutes. Use the structure, but make the thinking yours.</p></div>
+          <label class="answer-label" for="answer">Your answer <span>optional while speaking</span></label>
+          <textarea id="answer" placeholder="Capture your answer here as you speak…"></textarea>
+          <div class="modal-actions"><button id="finish-practice" class="button primary">Finish & review <span>→</span></button><button id="cancel-practice" class="button text-button">Cancel</button></div>
+        </div>
+        <div id="review-panel" class="hidden"><p class="modal-kicker">Nice work</p><h2>Review your<br /><em>thinking.</em></h2><p class="review-copy">Take a moment to assess the shape of your answer. Honest reflection is part of the practice.</p><div class="checklist" id="checklist"></div><label class="answer-label" for="review-notes">Notes <span>optional</span></label><textarea id="review-notes" placeholder="What would you improve next time?"></textarea><button id="save-practice" class="button primary full">Save practice <span>→</span></button></div>
+      </div>
+    </div>
+    <script src="data/seed-brief.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

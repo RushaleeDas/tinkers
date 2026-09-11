@@ -1,0 +1,24 @@
+const assert=require('assert');
+const seed=require('../data/seed-brief');
+const {normalizeArticle,dedupeArticles,scoreStory,selectStories,buildBrief,refreshBrief,buildExtempore}=require('../lib/content-service');
+const {parseFeed}=require('../lib/rss-service');
+
+const raw={title:'A useful story',url:'https://example.com/story',source:'Reuters',summary:'Recent development',pubDate:'2026-09-11T00:00:00Z',questionPotential:7,context:['one','two'],issue:'What should India do?'};
+const normalized=normalizeArticle(raw);
+assert.equal(normalized.title,'A useful story');
+assert.equal(normalized.publishedAt,'2026-09-11T00:00:00Z');
+const opinion=normalizeArticle({...raw,category:'Opinion · Economy',contentType:'opinion',debatePotential:8});
+const routine=normalizeArticle({...raw,category:'Economy',contentType:'news',debatePotential:2});
+assert.equal(opinion.contentType,'opinion');
+assert(scoreStory(opinion)>scoreStory(routine));
+assert.equal(normalizeArticle({...raw,title:'A plain report',category:'Current affairs'}).contentType,'news');
+assert.equal(dedupeArticles([raw,{...raw,title:'Same story copy'}]).length,1);
+assert.equal(parseFeed('<rss><channel><item><title><![CDATA[Test item]]></title><link>https://example.com/item</link><pubDate>2026-09-11T00:00:00Z</pubDate><description><![CDATA[Summary here.]]></description></item></channel></rss>',{name:'Test',url:'https://example.com',category:'Test',credibilityWeight:1})[0].title,'Test item');
+assert.equal(parseFeed('<not-a-feed/>',{name:'Test',url:'https://example.com'})[0],undefined);
+assert(scoreStory(normalized)>0);
+assert.equal(selectStories([...seed.stories,...seed.stories]).length,5);
+assert.equal(selectStories([{...raw,publishedAt:'2020-01-01T00:00:00Z'}],5,{now:new Date('2026-09-11T03:00:00Z')}).length,0);
+assert.deepEqual(buildExtempore([routine]).argumentsFor,[]);
+const brief=buildBrief({articles:[raw],extempore:seed.extempore,generatedAt:'2026-09-11T02:00:00Z'});
+assert.equal(brief.stories.length,1);assert.equal(brief.generatedAt,'2026-09-11T02:00:00Z');
+refreshBrief({fetchArticles:async()=>{throw new Error('feed unavailable')}}).then(()=>{throw new Error('failed refresh should reject')},()=>console.log('content-service tests passed'));
