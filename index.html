@@ -56,17 +56,10 @@
       </section>
     </main>
 
-    <div id="practice-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="practice-title">
-      <div class="modal-card">
-        <div class="modal-top"><span class="eyebrow">Practice mode</span><button class="icon-button" id="close-modal" aria-label="Close practice mode">×</button></div>
-        <div id="practice-active">
-          <p class="modal-kicker">Your question</p><h2 id="practice-title"></h2>
-          <div class="timer-wrap"><div id="timer" class="timer">02:00</div><div class="timer-track"><span id="timer-progress"></span></div><p>Speak for two minutes. Use the structure, but make the thinking yours.</p></div>
-          <label class="answer-label" for="answer">Your answer <span>optional while speaking</span></label>
-          <textarea id="answer" placeholder="Capture your answer here as you speak…"></textarea>
-          <div class="modal-actions"><button id="finish-practice" class="button primary">Finish & review <span>→</span></button><button id="cancel-practice" class="button text-button">Cancel</button></div>
-        </div>
-        <div id="review-panel" class="hidden"><p class="modal-kicker">Nice work</p><h2>Review your<br /><em>thinking.</em></h2><p class="review-copy">Take a moment to assess the shape of your answer. Honest reflection is part of the practice.</p><div class="checklist" id="checklist"></div><label class="answer-label" for="review-notes">Notes <span>optional</span></label><textarea id="review-notes" placeholder="What would you improve next time?"></textarea><button id="save-practice" class="button primary full">Save practice <span>→</span></button></div>
+    <div id="practice-modal" class="modal hidden" role="dialog" aria-modal="true" aria-label="Extempore Coach">
+      <div class="modal-card coach-modal-card">
+        <div class="modal-top"><span class="eyebrow">Extempore Coach</span><button class="icon-button" id="close-modal" aria-label="Close practice mode">×</button></div>
+        <div id="coach-content"></div>
       </div>
     </div>
     <script src="data/seed-brief.js"></script>
